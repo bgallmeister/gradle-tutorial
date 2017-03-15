@@ -3,3 +3,39 @@
     2. Add a section to the copy task from 1. that also copies all `*.dat` files under `content` and renames them to `*.data`.
        Hint: The rename regex is `"(.*)\\.dat"`.
 */
+
+
+/* The Gradle DSL Reference is where to look for all this cool stuff. */
+
+/* Interestingly, $buildDir is available in copyFiles but not in say.  I wonder
+ * why?  Where is $buildDir coming from?
+ */
+
+task say {
+    println "Build Dir is "
+    println project.buildDir
+}
+
+/* Copy does not blow things away first.  Use task of type "Sync" to delete,
+ * then copy
+ */
+task copyFiles(type: Copy) {
+    into "$buildDir/texts"
+    into ("content") {
+        from "content"
+        include "**/*.txt"
+        include "**/*.dat"
+        rename "(.*)\\.dat", '$1.data'
+    }
+    into ("images") {
+        from "images"
+    }
+}
+
+/* Here's a way to copy files, squishing the FS hierarchy. */
+task copyFilesFlat(type: Copy) {
+    into "$buildDir/flat"
+    from fileTree("content") {
+        include '**/*.txt'
+    }.files
+}

@@ -24,4 +24,26 @@ dependencies {
 
 jar {
     // add logic here
+    manifest.attributes("Implementation-Version" : project.version)
+}
+
+test {
+    maxParallelForks = 10
+}
+
+/*
+ * Three different ways of doing kind of the same thing.
+ * The first two are synonyms for each other, and _add_ 'java' to the default
+ * srcDirs.  The third replaces srcDirs with the list ['java'] via the = sign,
+ * hence the need for the square brackets.  The first two are not technically
+ * correct for step 6 above.
+ */
+
+// sourceSets.main.java.srcDirs 'java'
+/* sourceSets {
+    main.java.srcDirs 'java'
+} */
+
+sourceSets {
+    main.java.srcDirs = ['java']
 }

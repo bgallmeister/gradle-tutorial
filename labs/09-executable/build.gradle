@@ -7,3 +7,11 @@
     3. Inspect the various generated files under 'build'. Note the location of the generated object files, binary and install image.
     4. Run the hello executable via the install image script in build/install.
 */
+
+apply plugin: 'cpp'
+
+model {
+    components {
+        hello(NativeExecutableSpec)
+    }
+}
